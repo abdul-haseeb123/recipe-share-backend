@@ -5,6 +5,8 @@ import {
   getRecipeBySlug,
   getRecipes,
   getRecipesOfCurrentUser,
+  updateRecipe,
+  deleteRecipe,
 } from "../controllers/recipe.controller.js";
 import { upload } from "../middlewares/multer.middleware.js";
 
@@ -28,6 +30,8 @@ router.route("/").post(
   ]),
   createRecipe
 );
+router.route("/:slug").put(authMiddleware, updateRecipe);
+router.route("/:slug").delete(authMiddleware, deleteRecipe);
 router.route("/current-user").get(authMiddleware, getRecipesOfCurrentUser);
 
 export default router;
