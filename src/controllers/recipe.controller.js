@@ -4,7 +4,10 @@ import { ApiError } from "../utils/ApiError.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { User } from "../models/user.model.js";
 import { Recipe } from "../models/recipe.model.js";
+import { Review } from "../models/review.model.js";
 import { CATEGORIES } from "../constants.js";
+
+// CAUTION ANY DELETING AND UPDATING OF ASSETS DOES NOT REMOVE THE ASSETS FROM THE CLOUDINARY SERVER
 
 const createRecipe = asyncHandler(async (req, res) => {
   const { title, category, description, ingredients, instructions } = req.body;
@@ -193,4 +196,80 @@ const getRecipesOfCurrentUser = asyncHandler(async (req, res) => {
   res.status(200).json(new ApiResponse(200, recipes, "Recipes retrieved"));
 });
 
-export { createRecipe, getRecipeBySlug, getRecipes, getRecipesOfCurrentUser };
+const updateRecipe = asyncHandler(async (req, res) => {
+  const { title, category, description, ingredients, instructions } = req.body;
+  const { slug } = req.params;
+
+  if (!title && !category && !description && !ingredients && !instructions) {
+    throw new ApiError(400, "At least one field is required");
+  }
+
+  if (
+    [title, category, description, instructions, ingredients].some(
+      (field) => field.trim() === ""
+    )
+  ) {
+    throw new ApiError(400, "All fields are required");
+  }
+
+  const updatedFields = {};
+  if (title) {
+    updatedFields.title = title;
+  }
+  if (category) {
+    updatedFields.category = category;
+  }
+  if (description) {
+    updatedFields.description = description;
+  }
+  if (ingredients) {
+    updatedFields.ingredients = ingredients;
+  }
+  if (instructions) {
+    updatedFields.instructions = instructions;
+  }
+
+  const updatedRecipe = await Recipe.findOneAndUpdate(
+    { slug },
+    { $set: updatedFields },
+    { new: true }
+  );
+
+  if (!updatedRecipe) {
+    throw new ApiError(404, "Recipe not found");
+  }
+
+  res
+    .status(200)
+    .json(new ApiResponse(200, updatedRecipe, "Recipe updated successfully"));
+});
+
+const deleteRecipe = asyncHandler(async (req, res) => {
+  const { slug } = req.body;
+
+  if (!slug) {
+    throw new ApiError(400, "Slug is required");
+  }
+
+  const recipe = await Recipe.findOne({ slug });
+  if (!recipe) {
+    throw new ApiError(404, "Recipe not found");
+  }
+  await Review.deleteMany({ recipe: recipe._id });
+
+  const user = await User.findById(req.user._id);
+  user.recipes = user.recipes.filter((recipeId) => recipeId != recipe._id);
+  await user.save({ validateBeforeSave: false });
+  await recipe.deleteOne({ slug, owner: req.user._id });
+
+  res.status(200).json(new ApiResponse(200, {}, "Recipe deleted successfully"));
+});
+
+export {
+  createRecipe,
+  getRecipeBySlug,
+  getRecipes,
+  getRecipesOfCurrentUser,
+  updateRecipe,
+  deleteRecipe,
+};
