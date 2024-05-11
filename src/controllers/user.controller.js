@@ -5,6 +5,8 @@ import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import jwt from "jsonwebtoken";
 
+// CAUTION ANY DELETING AND UPDATING OF ASSETS DOES NOT REMOVE THE ASSETS FROM THE CLOUDINARY SERVER
+
 const generateAccessAndRefreshTokens = async (userId) => {
   try {
     const user = await User.findById(userId);
@@ -310,7 +312,16 @@ const deleteUserProfile = asyncHandler(async (req, res) => {
     throw new ApiError(404, "User not found");
   }
 
-  res.status(200).json(new ApiResponse(200, null, "User deleted successfully"));
+  const options = {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+  };
+
+  res
+    .status(200)
+    .clearCookie("accessToken", options)
+    .clearCookie("refreshToken", options)
+    .json(new ApiResponse(200, null, "User deleted successfully"));
 });
 
 export {
