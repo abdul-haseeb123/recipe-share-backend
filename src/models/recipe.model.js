@@ -1,11 +1,16 @@
 import mongoose from "mongoose";
-import { CATEGORIES } from "../config";
+import { CATEGORIES } from "../constants.js";
 
 const recipeSchema = new mongoose.Schema(
   {
     title: {
       type: String,
       required: true,
+    },
+    slug: {
+      type: String,
+      required: true,
+      unique: true,
     },
     category: {
       type: String,
@@ -16,24 +21,25 @@ const recipeSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    ingredients: [
-      {
-        type: String,
-      },
-    ],
+    ingredients: {
+      type: String,
+      required: true,
+    },
     instructions: {
       type: String,
       required: true,
     },
-    image: [
+    images: [
       {
         type: String,
       },
     ],
-    rating: {
-      type: Number,
-      min: 1,
-      max: 5,
+    coverImage: {
+      type: String,
+    },
+    owner: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
     },
     reviews: [
       {
