@@ -68,7 +68,7 @@ const registerUser = asyncHandler(async (req, res) => {
     username,
     password,
     avatar: avatar,
-    coverImage: coverImage || "",
+    coverImage: coverImage ? coverImage : null,
   });
 
   const user = await User.findOne({ _id: createdUser._id }).select("-password");
