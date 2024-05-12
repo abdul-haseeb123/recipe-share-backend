@@ -67,8 +67,8 @@ const registerUser = asyncHandler(async (req, res) => {
     email,
     username,
     password,
-    avatar: avatar.secure_url,
-    coverImage: coverImage?.secure_url || "",
+    avatar: avatar,
+    coverImage: coverImage || "",
   });
 
   const user = await User.findOne({ _id: createdUser._id }).select("-password");
@@ -253,6 +253,7 @@ const updateAvatar = asyncHandler(async (req, res) => {
   }
 
   const avatar = await uploadOnCloudinary(avatarLocalFilePath);
+  console.log(avatar);
 
   if (!avatar.secure_url) {
     throw new ApiError(400, "Error while uploading avatar");
@@ -262,7 +263,7 @@ const updateAvatar = asyncHandler(async (req, res) => {
     req.user?._id,
     {
       $set: {
-        avatar: avatar.secure_url,
+        avatar: avatar,
       },
     },
     {
@@ -272,7 +273,7 @@ const updateAvatar = asyncHandler(async (req, res) => {
 
   res
     .status(200)
-    .json(new ApiResponse(200, user, "Avatar updated successfully"));
+    .json(new ApiResponse(200, avatar, "Avatar updated successfully"));
 });
 
 const updateCoverImage = asyncHandler(async (req, res) => {
@@ -292,7 +293,7 @@ const updateCoverImage = asyncHandler(async (req, res) => {
     req.user?._id,
     {
       $set: {
-        coverImage: coverImage.secure_url,
+        coverImage: coverImage,
       },
     },
     {

@@ -60,7 +60,7 @@ const createRecipe = asyncHandler(async (req, res) => {
     if (!uploadedImage) {
       throw new ApiError(500, "Recipe image upload failed");
     }
-    recipeImages.push(uploadedImage.secure_url);
+    recipeImages.push(uploadedImage);
   }
 
   const recipesCount = await Recipe.countDocuments({ title: title });
@@ -74,7 +74,7 @@ const createRecipe = asyncHandler(async (req, res) => {
     ingredients,
     instructions,
     images: recipeImages,
-    coverImage: coverImage.secure_url,
+    coverImage: coverImage,
     owner: req.user._id,
   });
 

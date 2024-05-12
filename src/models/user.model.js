@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import imageSchema from "./image.schema.js";
 
 const userSchema = new mongoose.Schema(
   {
@@ -32,11 +33,11 @@ const userSchema = new mongoose.Schema(
       type: String,
     },
     avatar: {
-      type: String,
+      type: imageSchema,
       required: true,
     },
     coverImage: {
-      type: String,
+      type: imageSchema,
     },
     recipes: [
       {

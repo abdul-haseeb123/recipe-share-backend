@@ -13,10 +13,31 @@ const uploadOnCloudinary = async (localFilePath) => {
     // upload file to cloudinary
     const response = await cloudinary.uploader.upload(localFilePath, {
       resource_type: "auto",
+      folder: "recipes-project", // folder name on cloudinary
     });
     // file has been uploaded successfully
     fs.unlinkSync(localFilePath); // remove the locally saved temporary file
-    return response;
+    const {
+      asset_id,
+      public_id,
+      width,
+      height,
+      resource_type,
+      tags,
+      url,
+      secure_url,
+    } = response;
+    const image = {
+      asset_id,
+      public_id,
+      width,
+      height,
+      resource_type,
+      tags,
+      url,
+      secure_url,
+    };
+    return image;
   } catch (error) {
     fs.unlinkSync(localFilePath); // remove the locally saved temporary file
     return null;

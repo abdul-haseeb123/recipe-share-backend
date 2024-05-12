@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { CATEGORIES } from "../constants.js";
+import imageSchema from "./image.schema.js";
 
 const recipeSchema = new mongoose.Schema(
   {
@@ -31,11 +32,11 @@ const recipeSchema = new mongoose.Schema(
     },
     images: [
       {
-        type: String,
+        type: imageSchema,
       },
     ],
     coverImage: {
-      type: String,
+      type: imageSchema,
     },
     owner: {
       type: mongoose.Schema.Types.ObjectId,
