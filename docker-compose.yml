@@ -1,0 +1,35 @@
+version: "3.8"
+
+services:
+  expressbackend:
+    image: expressbackend
+    build: .
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
+    env_file:
+      - ./.env
+    depends_on:
+      - recipes-mongodb
+    ports:
+      - 8000:8000
+
+    networks:
+      - recipes-network
+
+  recipes-mongodb:
+    image: mongo
+    restart: always
+    container_name: recipes-mongodb
+    volumes:
+      - data:/data/db
+    ports:
+      - 27017:27017
+    networks:
+      - recipes-network
+
+volumes:
+  data:
+
+networks:
+  recipes-network:
