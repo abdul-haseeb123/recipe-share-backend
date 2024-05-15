@@ -19,7 +19,7 @@ export const authMiddleware = asyncHandler(async (req, _, next) => {
     );
 
     const user = await User.findById(decodedToken._id).select(
-      "-refreshToken -password"
+      "-refreshToken -password -recipes"
     );
 
     if (!user) {

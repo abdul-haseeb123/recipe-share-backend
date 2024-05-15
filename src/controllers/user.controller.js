@@ -71,7 +71,9 @@ const registerUser = asyncHandler(async (req, res) => {
     coverImage: coverImage ? coverImage : null,
   });
 
-  const user = await User.findOne({ _id: createdUser._id }).select("-password");
+  const user = await User.findOne({ _id: createdUser._id }).select(
+    "-password -refreshToken -recipes"
+  );
   if (!user) {
     throw new ApiError(500, "User not found");
   }
@@ -108,7 +110,7 @@ const loginUser = asyncHandler(async (req, res) => {
   };
 
   const user = await User.findById(existedUser._id).select(
-    "-password -refreshToken"
+    "-password -refreshToken -recipes"
   );
 
   res
