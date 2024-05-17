@@ -19,7 +19,6 @@ services:
 
   recipes-mongodb:
     image: mongo
-    restart: always
     container_name: recipes-mongodb
     volumes:
       - data:/data/db
