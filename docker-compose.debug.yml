@@ -1,4 +1,4 @@
-version: '3.4'
+version: "3.4"
 
 services:
   expressbackend:
@@ -11,4 +11,4 @@ services:
     ports:
       - 8000:8000
       - 9229:9229
-    command: ["node", "--inspect=0.0.0.0:9229", "index.js"]
+    command: ["node", "--inspect=0.0.0.0:9229", "src/index.js"]
