@@ -14,3 +14,5 @@ export const CATEGORIES = [
   "Soup recipes",
   "Vegetarian recipes",
 ];
+
+export const RECIPES_COUNT = 100;

@@ -63,8 +63,7 @@ const createRecipe = asyncHandler(async (req, res) => {
     recipeImages.push(uploadedImage);
   }
 
-  const recipesCount = await Recipe.countDocuments({ title: title });
-  const slug = generateSlug(title, recipesCount);
+  const slug = generateSlug(title);
 
   const newRecipe = await Recipe.create({
     title,
