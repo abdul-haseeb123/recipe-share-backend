@@ -14,3 +14,7 @@ export const CATEGORIES = [
   "Soup recipes",
   "Vegetarian recipes",
 ];
+
+export const RECIPES_COUNT = 100;
+export const REVIEWS_COUNT = 1000;
+export const USERS_COUNT = 20;

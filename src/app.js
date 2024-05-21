@@ -25,9 +25,11 @@ app.use(cookieParser());
 import userRoutes from "./routes/user.route.js";
 import recipeRoutes from "./routes/recipe.route.js";
 import reviewRoutes from "./routes/review.route.js";
+import seedRoutes from "./routes/seed.route.js";
 
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/recipes", recipeRoutes);
 app.use("/api/v1/reviews", reviewRoutes);
+app.use("/api/v1/seeds", seedRoutes);
 
 export { app };

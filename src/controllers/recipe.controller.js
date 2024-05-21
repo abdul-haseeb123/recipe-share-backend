@@ -63,8 +63,7 @@ const createRecipe = asyncHandler(async (req, res) => {
     recipeImages.push(uploadedImage);
   }
 
-  const recipesCount = await Recipe.countDocuments({ title: title });
-  const slug = generateSlug(title, recipesCount);
+  const slug = generateSlug(title);
 
   const newRecipe = await Recipe.create({
     title,
@@ -114,7 +113,7 @@ const getRecipeBySlug = asyncHandler(async (req, res) => {
     },
     {
       $addFields: {
-        rating: { $ifNull: [{ $avg: "$reviews.rating" }, 0] },
+        rating: { $ifNull: [{ $avg: "$reviews.rating" }, 1] },
       },
     },
     {
@@ -135,7 +134,7 @@ const getRecipeBySlug = asyncHandler(async (req, res) => {
   if (!recipe) {
     throw new ApiError(404, "Recipe not found");
   }
-  res.status(200).json(new ApiResponse(200, recipe, "Recipe retrieved"));
+  res.status(200).json(new ApiResponse(200, recipe[0], "Recipe retrieved"));
 });
 
 const getRecipes = asyncHandler(async (req, res) => {
@@ -161,7 +160,7 @@ const getRecipes = asyncHandler(async (req, res) => {
     {
       $addFields: {
         rating: {
-          $ifNull: [{ $avg: "$reviews.rating" }, 0],
+          $ifNull: [{ $avg: "$reviews.rating" }, 1],
         },
       },
     },
@@ -187,7 +186,47 @@ const getRecipes = asyncHandler(async (req, res) => {
 });
 
 const getRecipesOfCurrentUser = asyncHandler(async (req, res) => {
-  const recipes = await Recipe.find({ owner: req.user._id });
+  const pipeline = [
+    {
+      $match: { owner: req.user._id },
+    },
+    {
+      $lookup: {
+        from: "users",
+        localField: "owner",
+        foreignField: "_id",
+        as: "owner",
+      },
+    },
+    {
+      $lookup: {
+        from: "reviews",
+        localField: "reviews",
+        foreignField: "recipe",
+        as: "reviews",
+      },
+    },
+    {
+      $addFields: {
+        rating: {
+          $ifNull: [{ $avg: "$reviews.rating" }, 1],
+        },
+      },
+    },
+    {
+      $sort: { rating: -1 },
+    },
+    {
+      $project: {
+        title: 1,
+        category: 1,
+        coverImage: 1,
+        owner: { $arrayElemAt: ["$owner.username", 0] },
+        rating: { $round: ["$rating", 1] },
+      },
+    },
+  ];
+  const recipes = await Recipe.aggregate(pipeline);
 
   if (!recipes) {
     throw new ApiError(404, "Recipes not found");
@@ -205,9 +244,9 @@ const updateRecipe = asyncHandler(async (req, res) => {
   }
 
   if (
-    [title, category, description, instructions, ingredients].some(
-      (field) => field.trim() === ""
-    )
+    [title, category, description, instructions, ingredients]
+      .filter((field) => field !== undefined)
+      .some((field) => field.trim() === "")
   ) {
     throw new ApiError(400, "All fields are required");
   }
@@ -262,7 +301,9 @@ const deleteRecipe = asyncHandler(async (req, res) => {
   await user.save({ validateBeforeSave: false });
   await recipe.deleteOne({ slug, owner: req.user._id });
 
-  res.status(200).json(new ApiResponse(200, {}, "Recipe deleted successfully"));
+  res
+    .status(200)
+    .json(new ApiResponse(200, null, "Recipe deleted successfully"));
 });
 
 export {
