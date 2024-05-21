@@ -16,3 +16,5 @@ export const CATEGORIES = [
 ];
 
 export const RECIPES_COUNT = 100;
+export const REVIEWS_COUNT = 1000;
+export const USERS_COUNT = 20;

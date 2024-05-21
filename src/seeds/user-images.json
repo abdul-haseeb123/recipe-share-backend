@@ -1,0 +1,72 @@
+[
+  {
+    "asset_id": "e06fc166cb8cef3940a10624513abd5c",
+    "public_id": "recipes-project/tpjwoampqsy9zgnodm3t",
+    "width": 1920,
+    "height": 2880,
+    "resource_type": "image",
+    "tags": [],
+    "url": "http://res.cloudinary.com/dn7uk2uqo/image/upload/v1715531876/recipes-project/tpjwoampqsy9zgnodm3t.jpg",
+    "secure_url": "https://res.cloudinary.com/dn7uk2uqo/image/upload/v1715531876/recipes-project/tpjwoampqsy9zgnodm3t.jpg"
+  },
+  {
+    "asset_id": "d3ee2c2ed10f0644aeca3b518c45ffe6",
+    "public_id": "recipes-project/u7lttrh4ejvrhla96f5w",
+    "width": 1920,
+    "height": 2888,
+    "resource_type": "image",
+    "tags": [],
+    "url": "http://res.cloudinary.com/dn7uk2uqo/image/upload/v1715533255/recipes-project/u7lttrh4ejvrhla96f5w.jpg",
+    "secure_url": "https://res.cloudinary.com/dn7uk2uqo/image/upload/v1715533255/recipes-project/u7lttrh4ejvrhla96f5w.jpg"
+  },
+  {
+    "asset_id": "289a0d9f119c890a131622f78df60a01",
+    "public_id": "recipes-project/rr3a9a0aavvoxcsdm15g",
+    "width": 2400,
+    "height": 3600,
+    "resource_type": "image",
+    "tags": [],
+    "url": "http://res.cloudinary.com/dn7uk2uqo/image/upload/v1715533401/recipes-project/rr3a9a0aavvoxcsdm15g.jpg",
+    "secure_url": "https://res.cloudinary.com/dn7uk2uqo/image/upload/v1715533401/recipes-project/rr3a9a0aavvoxcsdm15g.jpg"
+  },
+  {
+    "asset_id": "56a3d89492f4baf18e7bd188aaff78ef",
+    "public_id": "recipes-project/olv1nhrvwoqbpy5c4mhq",
+    "width": 1920,
+    "height": 1280,
+    "resource_type": "image",
+    "tags": [],
+    "url": "http://res.cloudinary.com/dn7uk2uqo/image/upload/v1715535215/recipes-project/olv1nhrvwoqbpy5c4mhq.jpg",
+    "secure_url": "https://res.cloudinary.com/dn7uk2uqo/image/upload/v1715535215/recipes-project/olv1nhrvwoqbpy5c4mhq.jpg"
+  },
+  {
+    "asset_id": "50c1ddb95cca6b380515bc576eafa636",
+    "public_id": "recipes-project/mml1kcsr1uttelsylpco",
+    "width": 5760,
+    "height": 3840,
+    "resource_type": "image",
+    "tags": [],
+    "url": "http://res.cloudinary.com/dn7uk2uqo/image/upload/v1715535288/recipes-project/mml1kcsr1uttelsylpco.jpg",
+    "secure_url": "https://res.cloudinary.com/dn7uk2uqo/image/upload/v1715535288/recipes-project/mml1kcsr1uttelsylpco.jpg"
+  },
+  {
+    "asset_id": "12c988cd03367556fcf520c69086bb62",
+    "public_id": "recipes-project/jndyka0ejmvohlmyk6og",
+    "width": 2400,
+    "height": 1643,
+    "resource_type": "image",
+    "tags": [],
+    "url": "http://res.cloudinary.com/dn7uk2uqo/image/upload/v1715535358/recipes-project/jndyka0ejmvohlmyk6og.jpg",
+    "secure_url": "https://res.cloudinary.com/dn7uk2uqo/image/upload/v1715535358/recipes-project/jndyka0ejmvohlmyk6og.jpg"
+  },
+  {
+    "asset_id": "7de43dd5dbc2873139c57c41012d9b85",
+    "public_id": "recipes-project/pgzy2oicbe96t1nudnor",
+    "width": 2400,
+    "height": 1643,
+    "resource_type": "image",
+    "tags": [],
+    "url": "http://res.cloudinary.com/dn7uk2uqo/image/upload/v1716090990/recipes-project/pgzy2oicbe96t1nudnor.jpg",
+    "secure_url": "https://res.cloudinary.com/dn7uk2uqo/image/upload/v1716090990/recipes-project/pgzy2oicbe96t1nudnor.jpg"
+  }
+]
