@@ -13,9 +13,8 @@ import { upload } from "../middlewares/multer.middleware.js";
 const router = Router();
 
 router.route("/").get(getRecipes);
+router.route("/current-user").get(authMiddleware, getRecipesOfCurrentUser);
 router.route("/:slug").get(getRecipeBySlug);
-
-// secured routes
 router.route("/").post(
   authMiddleware,
   upload.fields([
@@ -32,6 +31,5 @@ router.route("/").post(
 );
 router.route("/:slug").put(authMiddleware, updateRecipe);
 router.route("/:slug").delete(authMiddleware, deleteRecipe);
-router.route("/current-user").get(authMiddleware, getRecipesOfCurrentUser);
 
 export default router;

@@ -41,8 +41,8 @@ const createReview = asyncHandler(async (req, res) => {
   await review.save();
 
   res
-    .status(201)
-    .json(new ApiResponse(201, review, "Review created successfully"));
+    .status(200)
+    .json(new ApiResponse(200, review, "Review created successfully"));
 });
 
 const updateReview = asyncHandler(async (req, res) => {

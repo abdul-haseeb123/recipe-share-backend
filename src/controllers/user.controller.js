@@ -90,12 +90,13 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 
   const existedUser = await User.findOne({ email });
-
+  console.log("existed user found", existedUser);
   if (!existedUser) {
     throw new ApiError(400, "Invalid email or password");
   }
 
   const isPasswordCorrect = await existedUser.isPasswordCorrect(password);
+  console.log("Password correct status", isPasswordCorrect);
   if (!isPasswordCorrect) {
     throw new ApiError(400, "Invalid email or password");
   }
