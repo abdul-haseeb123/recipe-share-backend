@@ -14,3 +14,7 @@ This is the backend for the Recipes Review App. It is built using Express.js and
 - Pagination
 - Image Upload
 - Error Handling
+
+## LICENSE
+
+[MIT License](LICENSE)
