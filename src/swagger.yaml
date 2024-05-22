@@ -1010,7 +1010,7 @@ paths:
           description: Invalid input
         "404":
           description: Review not found
-  /seed/users:
+  /seeds/users:
     post:
       tags:
         - Seed Database with Random Data
@@ -1040,7 +1040,7 @@ paths:
                     example: true
         "400":
           description: Invalid input
-  /seed/recipes:
+  /seeds/recipes:
     post:
       tags:
         - Seed Database with Random Data
@@ -1070,7 +1070,7 @@ paths:
                     example: true
         "400":
           description: Invalid input
-  /seed/reviews:
+  /seeds/reviews:
     post:
       tags:
         - Seed Database with Random Data
