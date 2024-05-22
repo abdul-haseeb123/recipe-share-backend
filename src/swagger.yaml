@@ -652,7 +652,6 @@ paths:
           required: true
           schema:
             type: string
-            format: uuid
             example: "baked-sweet-potatoes-550e8400-e29b-41d4-a716-446655440000"
       responses:
         "200":
@@ -690,7 +689,6 @@ paths:
           required: true
           schema:
             type: string
-            format: uuid
             example: "baked-sweet-potatoes-550e8400-e29b-41d4-a716-446655440000"
       requestBody:
         content:
@@ -823,7 +821,6 @@ paths:
           required: true
           schema:
             type: string
-            format: uuid
             example: "baked-sweet-potatoes-550e8400-e29b-41d4-a716-446655440000"
       responses:
         "200":
@@ -863,7 +860,6 @@ paths:
           required: true
           schema:
             type: string
-            format: uuid
             example: "baked-sweet-potatoes-550e8400-e29b-41d4-a716-446655440000"
       requestBody:
         content:
@@ -930,7 +926,6 @@ paths:
               properties:
                 reviewId:
                   type: string
-                  format: uuid
                   example: "550e8400-e29b-41d4-a716-446655440000"
       responses:
         "200":
