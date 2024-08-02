@@ -56,7 +56,6 @@ const createRecipe = asyncHandler(async (req, res) => {
   const recipeImages = [];
   for (const image of recipeImagesLocalFilePaths) {
     const uploadedImage = await uploadOnCloudinary(image.path);
-    console.log("uploadedImage", uploadedImage);
     if (!uploadedImage) {
       throw new ApiError(500, "Recipe image upload failed");
     }

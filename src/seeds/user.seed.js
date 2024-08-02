@@ -15,7 +15,6 @@ const seedUsers = asyncHandler(async (req, res) => {
   await Review.deleteMany();
   await Recipe.deleteMany();
   const userImages = loadJson(filePath);
-  console.log(userImages[0]);
 
   const users = new Array(USERS_COUNT).fill("_").map(() => {
     const email = faker.internet.email();
