@@ -1,11 +1,12 @@
 import { asyncHandler } from "../utils/index.js";
 import { ApiError } from "../utils/ApiError.js";
 import { User } from "../models/user.model.js";
-import { uploadOnCloudinary } from "../utils/cloudinary.js";
+import {
+  uploadOnCloudinary,
+  removeFromCloudinary,
+} from "../utils/cloudinary.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import jwt from "jsonwebtoken";
-
-// CAUTION ANY DELETING AND UPDATING OF ASSETS DOES NOT REMOVE THE ASSETS FROM THE CLOUDINARY SERVER
 
 const generateAccessAndRefreshTokens = async (userId) => {
   try {
@@ -252,7 +253,8 @@ const updateAvatar = asyncHandler(async (req, res) => {
   if (!avatarLocalFilePath) {
     throw new ApiError(400, "Avatar is required");
   }
-
+  req.user.avatar?.public_id &&
+    (await removeFromCloudinary(req.user.avatar.public_id));
   const avatar = await uploadOnCloudinary(avatarLocalFilePath);
 
   if (!avatar.secure_url) {
@@ -282,7 +284,8 @@ const updateCoverImage = asyncHandler(async (req, res) => {
   if (!coverLocalFilePath) {
     throw new ApiError(400, "Cover file is required");
   }
-
+  req.user.coverImage?.public_id &&
+    (await removeFromCloudinary(req.user.coverImage.public_id));
   const coverImage = await uploadOnCloudinary(coverLocalFilePath);
 
   if (!coverImage.secure_url) {
@@ -308,6 +311,9 @@ const updateCoverImage = asyncHandler(async (req, res) => {
 
 const deleteUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findByIdAndDelete(req.user?._id);
+  user.avatar?.public_id && (await removeFromCloudinary(user.avatar.public_id));
+  user.coverImage?.public_id &&
+    (await removeFromCloudinary(user.coverImage.public_id));
 
   if (!user) {
     throw new ApiError(404, "User not found");

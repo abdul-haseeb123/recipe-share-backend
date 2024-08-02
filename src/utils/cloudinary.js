@@ -44,4 +44,11 @@ const uploadOnCloudinary = async (localFilePath) => {
   }
 };
 
-export { uploadOnCloudinary };
+const removeFromCloudinary = async (publicId) => {
+  return await cloudinary.uploader.destroy(publicId, {
+    resource_type: "image",
+    folder: "recipes-project", // folder name on cloudinary
+  });
+};
+
+export { uploadOnCloudinary, removeFromCloudinary };
