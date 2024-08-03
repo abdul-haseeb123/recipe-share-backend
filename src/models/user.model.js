@@ -19,12 +19,6 @@ const userSchema = new mongoose.Schema(
       unique: true,
       lowercase: true,
     },
-    username: {
-      type: String,
-      required: true,
-      unique: true,
-      lowercase: true,
-    },
     password: {
       type: String,
       required: [true, "Password is required"],
@@ -34,7 +28,6 @@ const userSchema = new mongoose.Schema(
     },
     avatar: {
       type: imageSchema,
-      required: true,
     },
     coverImage: {
       type: imageSchema,

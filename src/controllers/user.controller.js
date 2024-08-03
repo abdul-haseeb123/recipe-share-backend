@@ -23,22 +23,20 @@ const generateAccessAndRefreshTokens = async (userId) => {
 };
 
 const registerUser = asyncHandler(async (req, res) => {
-  const { firstName, lastName, email, username, password } = req.body;
+  const { firstName, lastName, email, password } = req.body;
   // check if all fields are provided
-  if (!firstName || !lastName || !email || !username || !password) {
+  if (!firstName || !lastName || !email || !password) {
     throw new ApiError(400, "All fields are required");
   }
 
   if (
-    [firstName, lastName, email, username, password].some(
-      (field) => field.trim() === ""
-    )
+    [firstName, lastName, email, password].some((field) => field.trim() === "")
   ) {
     throw new ApiError(400, "All fields are required");
   }
 
   // check if user already exists
-  const existedUser = await User.findOne({ $or: [{ username }, { email }] });
+  const existedUser = await User.findOne({ email });
 
   if (existedUser) {
     throw new ApiError(400, "User already exists");
@@ -51,22 +49,13 @@ const registerUser = asyncHandler(async (req, res) => {
     ? req?.files["coverImage"][0]?.path
     : null;
 
-  if (!avatarLocalFilePath || avatarLocalFilePath == undefined) {
-    throw new ApiError(400, "Avatar is required");
-  }
-
   const avatar = await uploadOnCloudinary(avatarLocalFilePath);
   const coverImage = await uploadOnCloudinary(coverImageLocalFilePath);
-
-  if (!avatar) {
-    throw new ApiError(500, "Avatar upload failed");
-  }
 
   const createdUser = await User.create({
     firstName,
     lastName,
     email,
-    username,
     password,
     avatar: avatar,
     coverImage: coverImage ? coverImage : null,
